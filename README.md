@@ -1,3 +1,4 @@
+# REG NO: 212224040087
 # Multiple server with infinite capacity - (M/M/c):(oo/FIFO)
 ## Aim :
 To find (a) average number of materials in the system (b) average number of materials in the conveyor (c) waiting time of each material in the system (d) waiting time of each material in the conveyor, if the arrival  of materials follow poisson process with the mean interval time 10 seconds, serivice time of two lathe machine follow exponential distribution with mean serice time 1 second and average service time of robot is 7seconds.
@@ -17,13 +18,56 @@ Queuing are the most frequently encountered problems in everyday life. For examp
 
 
 
-## Experiment:
 
 
 ## Program
 
-
+```
+import math 
+ 
+arr_time_input = '' 
+while not arr_time_input.strip(): # Loop until a non-empty input is received 
+    arr_time_input = input("Enter the mean inter arrival time of objects from feeder (in secs):") 
+    if not arr_time_input.strip(): 
+        print("Input cannot be empty. Please enter a value.") 
+ 
+arr_time = float(arr_time_input) 
+ 
+ser_time=float(input("Enter the mean inter service time of lathe machine (in secs):")) 
+Robot_time=float(input("Enter the Additional time taken for the robot (in secs):")) 
+c=int(input("Number of service centres:")) 
+lam=1/arr_time 
+mu=1/(ser_time+Robot_time) 
+print("------------------------------------------------") 
+print("Multiple Server with infinite capacity- (M/M/c):(00/FIFO)") 
+print("----------------------------------------------------") 
+print("The mean arrival rate per second: %0.2f" %lam) 
+print("The mean service rate per second: %0.2f"%mu) 
+rho=lam/(c*mu) 
+sum=(lam/mu)**c*(1/(1-rho))/math.factorial(c) 
+for i in range(0,c): 
+    sum=sum+(lam/mu)**i/math.factorial(i) 
+P0=1/sum 
+if(rho<1): 
+    Lq=(P0/math.factorial(c))*(1/c)*(lam/mu)**(c+1)/(1-rho)**2 
+    Ls=Lq+lam/mu 
+    Ws=Ls/lam 
+    Wq=Lq/lam 
+    print("Average number of objects in the system: %0.2f"%Ls) 
+    print("Average numner of objects in the conveyor: %0.2f"%Lq) 
+    print("Average waiting time of an object in the system: %0.2f secs"%Ws) 
+    print("Average waiting time of an object in the conveyor: %0.2f secs"%Ws) 
+    print("Probability that the system is busy: %0.2f" %(rho)) 
+    print("Probability that the system is empty:%0.2f "%(1-rho)) 
+else: 
+    print("Warning! Objects overflow will happen in the conveyor") 
+print("-----------------------------------------------------")
+```
 ## Output :
 
+<img width="760" height="363" alt="557417541-8fc707a8-28ca-4c38-acb7-08d05266ed6c" src="https://github.com/user-attachments/assets/0782fcf3-59f4-40b1-b82b-77ab0d4a8e2a" />
+
+
 ## Result : 
+The average number of material in the system and in the conveyor and waiting are  successfully found.
 
